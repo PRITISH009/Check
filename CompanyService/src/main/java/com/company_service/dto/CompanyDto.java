@@ -1,5 +1,7 @@
 package com.company_service.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +16,6 @@ public class CompanyDto {
 	private float companyTurnOver;
 	private String writeUp;
 	private String ceo;
+	private SectorDto sector;
+	private List<BodDto> bod;
 }

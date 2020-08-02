@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,5 +51,15 @@ public class CompanyController {
 			method=RequestMethod.GET)
 	public void getCompanyDetails() {
 		companyService.getCompanyDetails();
+	}
+
+	@GetMapping(path  = "/all")
+	public ResponseEntity<?> getAllCompanies() {
+		return ResponseEntity.ok(companyService.findAllCompanies());
+	}
+
+	@GetMapping(path = "/allBOD")
+	public ResponseEntity<?> getAllBOD() {
+		return ResponseEntity.ok(companyService.findAllBod());
 	}
 }
