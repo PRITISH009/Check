@@ -1,6 +1,8 @@
 package com.company_service.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -140,6 +142,44 @@ public class CompanyServiceImpl implements CompanyService{
 			System.out.println(boDDao.findAllByCompanyId());
 		}
 		return null;
+	}
+
+	public List<CompanyDto> findAllCompanies() {
+		List<Company> result = companyDao.findAll();
+		return result.stream().map(this::mapToCompanyDto).collect(Collectors.toList());
+	}
+
+	private CompanyDto mapToCompanyDto(Company company) {
+		return CompanyDto.builder()
+				.ceo(company.getCeo())
+				.companyName(company.getCompanyName())
+				.companyTurnOver(company.getCompanyTurnOver())
+				.writeUp(company.getWriteUp())
+				.sector(mapTSectorDto(company.getSector()))
+				.bod(convertToBodDto(company.getBod()))
+				.build();
+	}
+
+	private SectorDto mapTSectorDto(Sector sector) {
+		return SectorDto.builder()
+				.sectorName(sector.getSectorName())
+				.build();
+	}
+
+	private List<BodDto> convertToBodDto(List<BOD> bod) {
+		return bod.stream().map(this::mapTBodDto).collect(Collectors.toList());
+	}
+
+	private BodDto mapTBodDto(BOD bod) {
+		return BodDto.builder()
+				.firstName(bod.getFirstName())
+				.lastName(bod.getLastName())
+				.build();
+	}
+
+	public List<BodDto> findAllBod() {
+		List<BOD> result = boDDao.findAllByCompanyId();
+		return result.stream().map(this::mapTBodDto).collect(Collectors.toList());
 	}
 	
 }
